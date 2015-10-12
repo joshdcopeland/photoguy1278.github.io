@@ -1,0 +1,163 @@
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script> 
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-animate.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-route.min.js"></script>
+
+    <script src="app.js"></script>
+<!--    <script src="autoCompleteCTRL.js"></script>-->
+  </head>
+  <body ng-controller="MainCtrl">
+    <!--  ******************************* MAIN  ************-->
+    <div class="container">
+      <div class="banner-image-container">
+          <img class="buckit-main-img"alt="C$50 Final Project" src="/img/buckit_logo_washington8.png"/>
+      </div>
+      <div class="cash-fillup-container">
+        <div class="cash-remaining">
+            CASH REMAINING:<br>{{history[history.length -1].balance | currency}}
+        </div>
+				<div class="fillup-link">
+            <a ng-click="cancelBuckit(); toggleShowFillup();">Fill Up Account</a>
+        </div>
+			</div> <!------- END cash-fillup-container ----->	
+
+			<div class="buckit-fillup-animate fillup-master rounded-corners-sm" ng-if="shouldShowFillup"><!--  *************** fillup ************-->
+				<div class="fillup-pad">
+					<div class="cancel-button" ng-click="toggleShowFillup()"></div>  
+					<div class="fillup-container">
+
+							<div class="fillup-input rounded-corners-sm">
+								 <b style="font-size: 20px">$ </b>
+									<input class="rounded-corners-sm" ng-model="fillupAmount" min=1 type="number"/>
+							</div>
+							<div class="fillup-button">
+									<button class="btn btn-default" ng-click="setFillup(fillupAmount)">Fillup!</button>
+							</div>
+					</div>	<!-- end container-->				
+				</div> <!-- end pad -->
+			</div> <!--  ************************END fillup ************-->
+      
+       <!--  ******************************* BUCKIT ************-->     
+      <div class="buckit-main-animate buckit-master" ng-if="shouldShowBuckit() && !shouldShowFillup" ng-animate-children>
+         
+        <div class="buckit-container center" >
+     			<div class="buckit-top-shelf rounded-corners-top">
+						<div class="cancel-button" ng-click="cancelBuckit()"></div>  
+						<div class="buckit-company-master rounded-corners-sm">  
+							<div class="buckit-company-image rounded-corners-sm">
+								<img src="{{company.imageUrl}}" alt="" />               
+							</div>              
+						</div><!-- END  buckit-company-master -->
+						<div class="buckit-buttons-set-container-master rounded-corners-sm ">
+							<div class="curtain">
+								<br><br><br><br><h1 class="curtain-h1" ng-click="cancelBuckit()">BUCKIT!</h1>
+							</div>  							
+							<div class="buckit-buttons-set-container">                 
+								<div class="buckitButtons">
+									<button class="imgClassBuckitUpButtons" ng-click="upBuckit()"></button>
+									<input class="imgClassBuckit glowing" type="text" ng-click="cancelBuckit(); payBuckit(bucksPaid, company);" value="${{bucksPaid}}" >
+									<button class="imgClassBuckitDownButtons" ng-click="downBuckit()"></button>              
+								</div> <!-- END  buckit-buttons -->
+								<div class="buckit-set">
+									<b ng-click="toggleShowSetBuckit()">Set</b>
+									<input class="rounded-corners-sm" type="text" ng-if="shouldShowSetBucket" ng-model="$parent.bucksPaid">
+								</div>  <!-- END  buckit-set -->                
+							</div> <!-- END  buckit-buttons-set-container -->														
+						</div>
+					</div><!-- END  buckit-top-shelf -->
+			
+					<div class="buckit-name">
+						<div >
+							<h4>{{company.name}}</h4>
+						</div>					
+					</div>
+          <div class="buckit-description-master  rounded-corners-bottom">
+            <div class="descriptionbox rounded-corners-bottom">
+                {{company.description}}
+            </div>
+          </div><!-- END  buckit-description -->
+             
+        </div><!--/* END buckit-container*/-->                    
+      
+      </div><!--/* END buckit-master */-->   
+    <!--  ******************************* END BUCKIT ************-->
+    
+      
+    <!--  ******************************* TYPEAHEAD   ng-controller="autoCompleteCTRL" ************-->
+      
+      <div ng-if="!shouldShowBuckit() && !shouldShowFillup" class="typeahead-master">
+          <div class="buckit-link rounded-corners-top">
+            <a ng-click="setCurrentCompany(searchText);populateBuckit(searchText);"><h3>BUCKIT!</h3></a>
+          </div>
+          <div class="typeahead-container">  
+						<input type="text" placeholder="Search for charities" class="tt-input" ng-keydown="checkKeyDown($event)" ng-keyup="checkKeyUp($event)"  ng-model="$parent.searchText" ng-change="search()" />
+						
+						<ul class="suggestions-list" >
+								<li ng-repeat="suggestion in suggestions track by $index" ng-class="{ active : selectedIndex === $index}" ng-click="AssignValueAndHide($index)">{{suggestion}}</li>
+						</ul>
+          </div>  
+      </div>  
+   <!--//*** END Typeahead ****//--> 
+			
+      <div class="table-both-container gradient-gray rounded-corners-sm "> <!--------- BOTH TABLES ------>
+				<div class="buckit-list-table-container">
+          <h3 class="buckit-list-table-container-h3">Your Buckit List:</h3>
+          <table class="buckit-list-table" border="0">
+              <tr>
+                  <td style="width:90%; min-width:130px;"><b>Company</b></td>
+                  <td><b>Code</b></td>
+              </tr> 
+                  <tr ng-repeat="company in companies"> <!--//*** Companies ****//-->  
+                      <td><a ng-click="setCurrentCompany(company.name);populateBuckit(company.name);">{{company.name}}</a></td><td>&nbsp;<a ng-click="setCurrentCompany(company.name);populateBuckit(company.name);">{{company.code}}</a></td>
+                  </tr>           
+          </table>				
+				</div><!--------------------------------------------END Buckit List Container -->	
+				
+				<div class="history-table-container">
+					<h3>Your History:</h3>
+          <table class="history-table" border="0" >
+              <thead>
+                  <tr>
+                      <th class="event"><b>Event</b></th>
+                      <th class="code"><b>Code</b></th>
+                      <th class="time"><b>Date/Time</b></th>
+                      <th class="bucks"><b>Bucks</b></th>
+                      <th class="balance"><b>Balance</b></th>
+                  </tr> 
+              </thead>
+              <tbody>
+                  <tr>
+                      <td colspan="6">
+                  <div>    
+                      <table> <!--//*** History ****  ng-class="{'new-buckit-glow':$index==0}"   //-->  
+                              <tr ng-repeat="event in history | reverse track by $index" ng-class="{'new-buckit-glow': $index===0 && shouldGlow}">
+                              <td class="event">{{event.name}}</td><td class="code center">{{event.code}}</td><td class="time center">{{event.time | date: 'medium' }}</td><td class="bucks center">{{event.bucks | currency}}</td><td class="balance center">{{event.balance | currency}} <!--<br> {{event.id}} {{$index}}--> </td>
+                              </tr>           
+                          
+                      </table>
+                  </div>    
+                      </td>    
+                  </tr>
+              </tbody>
+          </table> 				
+				</div> <!----------------------------------------- END history-table-container -->
+            
+      </div> <!-- end table-both-container -->
+      <div class="nofloat">
+          <a>Change Password</a>
+      </div>
+      <div>
+          <a>Log Out</a>
+      </div>
+    </div> <!--- END CONTAINER ---->
+    <!--  ******************************* END MAIN  ************-->
+  </body>
+</html>

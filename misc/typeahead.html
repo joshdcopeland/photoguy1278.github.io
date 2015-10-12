@@ -1,0 +1,15 @@
+<div class="buckit_search">    
+  <form action="buckit.php" method="GET">
+      <fieldset>
+          <div class="form-group">
+            
+              <input class="form-control input" ng-keydown="checkKeyDown($event)" ng-keyup="checkKeyUp($event)" ng-model="searchText" ng-change="search()" placeholder="Enter 3 digit Code or Name" type="text" autocomplete="off"/>
+            
+          </div>
+          <div ng-transclude></div>
+          <div class="form-group">
+              <button type="submit" class="btn btn-default">Find My Charity</button>
+          </div>
+      </fieldset>
+  </form>    
+</div>

@@ -1,0 +1,81 @@
+<div class="container" ng-controller="MainCtrl">
+  <div class="text-center">
+      <a href="/"><img class="main-img"alt="C$50 Final Project" src="/img/wash_logo.jpg"/></a>
+  </div>
+  <div class="text-right">
+    <div class="brown">
+        <br>
+        CASH REMAINING:
+    </div>
+    <div>
+        <a href="fillup.php">Fill Up Account</a>
+    </div>
+  </div>
+  <div class="buckit">
+      <a href="give.php"><h3><b>BUCKIT!</b></h3></a>
+  </div>
+  
+<!--  ******************************* TYPEAHEAD   ************-->
+  
+<div ng-controller="autoCompleteCTRL">
+    <div>  
+      
+      
+            <div><input type="text" placeholder="Search for items" class="tt-input" ng-keydown="checkKeyDown($event)" ng-keyup="checkKeyUp($event)"  ng-model="searchText" ng-change="search()" /></div>
+            
+            <ul class="suggestions-list" >
+                <li ng-repeat="suggestion in suggestions track by $index" ng-class="{ active : selectedIndex === $index}" ng-click="AssignValueAndHide($index)">{{suggestion}}</li>
+            </ul>
+      
+      
+    </div>  
+</div>  
+ 
+<!--//*** END Typeahead ****//-->
+ 
+  <div class="left">
+      <h3><b>Your Buckit List:</b></h3>
+      <h3 style="margin-left: 51%; margin-top: -35px"><b>Your History:</b></h3>
+      <table class="table1" border="0">
+          <tr>
+              <td style="width:300px"><b>Company</b></td>
+              <td style="width:0px"><b>Code</b></td>
+          </tr> 
+              <tr ng-repeat="company in self.companies">
+                  <td><a href="#/{{company.code}}">{{company.name}}</a></td><td>&nbsp;<a href="#/{{company.code}}">{{company.code}}</a></td>
+              </tr>           
+      </table>
+      <table class="table2" border="0" >
+          <thead>
+              <tr>
+                  <th style="width:92px"><b>Event</b></th>
+                  <th style="width:54px"><b>Code</b></th>
+                  <th style="width:44px"><b>Date</b></th>
+                  <th style="width:43px"><b>Time</b></th>
+                  <th style="width:55px"><b>Bucks</b></th>
+                  <th><b>Balance</b></th>
+              </tr> 
+          </thead>
+          <tbody>
+              <tr>
+                  <td colspan="6">
+              <div>    
+                  <table ng-controller="HistoryListCtrl as self">
+                          <tr style="font-size: 10px" ng-repeat="event in self.events">
+                              <td width="100px">{{event.name}}</td><td width="35px">{{event.code}}</td><td width="115px">{{event.time | date: 'medium' }}</td><td width="50px">{{event.bucks | currency}}</td><td width="10px">{{event.balance | currency}}</td>
+                          </tr>           
+                      
+                  </table>
+              </div>    
+                  </td>    
+              </tr>
+          </tbody>
+      </table>             
+  </div>
+  <div class="nofloat">
+      <a href="password.php">Change Password</a>
+  </div>
+  <div>
+      <a href="logout.php">Log Out</a>
+  </div>
+</div>

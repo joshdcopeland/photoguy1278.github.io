@@ -1,0 +1,12 @@
+<div ng-controller="NameCtrl as self" >
+  Search: <input ng-model="query" type="text"/>
+  <br><a style="padding-left:60px" href="" ng-click="sortField='toString()'; reverse=!reverse">sort</a>
+  <ul ng-repeat="name in self.names  | filter:query | orderBy:sortField:reverse track by $index">
+    <li><a style="color:black" href="#/{{name | encodeURI}}">{{name}}</a><a href="" ng-click="self.removeName(name)"> remove</a></li>
+  </ul>
+  <form ng-submit="self.addName()">
+    <input type="text" ng-model="self.enteredName"/>
+    <input type="submit" value="Add {{self.enteredName}}"/>
+    <br><h3></h3><h1>{{self.enteredName}}</h1>
+  </form>
+</div>
