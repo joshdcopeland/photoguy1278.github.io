@@ -987,6 +987,9 @@ div.form-group
   text-align: right;
 }
 
+/* *********************************************************** MEDIA QUERY styles */
+
+
 @media only screen and (max-width:991px){
 	.history-table-container{ 
 		width: 99%;
@@ -1092,10 +1095,12 @@ div.form-group
 			height: 100%;
 	}
 		.history-table th.event{
+		padding: 0 5px 0 5px;
 		width: 80%;
 	}
 			.history-table td.event{
 		width: 93%;
+		padding: 0 5px 0 5px;
 	}
 	
 	.history-table th.code{
@@ -1115,6 +1120,10 @@ div.form-group
 	.history-table-mobile-container {
 		display: inline;
 		width: 99%;
+	}
+	
+	.history-table-mobile-container h3 {
+		margin-top: 30px;
 	}
 	
 	.history-table-container {
