@@ -316,6 +316,11 @@ table {
 	margin: 0px auto 10px auto;
 }
 
+.history-table-mobile-container {
+	display: none;
+
+}
+
 .history-table-container {
 	text-align: center;
 	display: block;
@@ -381,7 +386,9 @@ table {
 .history-table th.balance{
 	width: 19%;
 }
-
+	.history-table td{
+	padding: 5px 0 5px 0;
+}
 
 
 
@@ -987,6 +994,8 @@ div.form-group
 		.buckit-list-table-container{ 
 		width: 99%;
 	}
+
+
 	.buckit-container {
 		height: 100%;
 		width: 100%;
@@ -1083,7 +1092,10 @@ div.form-group
 			height: 100%;
 	}
 		.history-table th.event{
-		width: 30%;
+		width: 80%;
+	}
+			.history-table td.event{
+		width: 93%;
 	}
 	
 	.history-table th.code{
@@ -1099,6 +1111,17 @@ div.form-group
 	.history-table th.balance{
 		width: 20%;
 	}
+	
+	.history-table-mobile-container {
+		display: inline;
+		width: 99%;
+	}
+	
+	.history-table-container {
+		display: none;
+	}
+
+	
 
 
 		

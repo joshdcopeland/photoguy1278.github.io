@@ -135,7 +135,7 @@
               </thead>
               <tbody>
                   <tr>
-                      <td colspan="6">
+                      <td colspan="6" style="padding:0;">
                   <div>    
                       <table> <!--//*** History ****  ng-class="{'new-buckit-glow':$index==0}"   //-->  
                               <tr ng-repeat="event in history | reverse track by $index" ng-class="{'new-buckit-glow': $index===0 && shouldGlow}">
@@ -149,6 +149,40 @@
               </tbody>
           </table> 				
 				</div> <!----------------------------------------- END history-table-container -->
+				<div class="history-table-mobile-container"> <!-----MOBILE HISTORY-->
+					<h3>Your History:</h3>
+          <table class="history-table" border="0" >
+              <thead>
+                  <tr>
+                      <th class="event"><b>Transaction</b></th>
+                      <th class="balance"><b>Balance</b></th>
+                  </tr> 
+              </thead>
+              <tbody>
+                  <tr>
+                      <td colspan="6" style="padding:0;">
+                  <div>    
+                      <table> <!--//*** History ****  ng-class="{'new-buckit-glow':$index==0}"   //-->  
+                              <tr ng-repeat="event in history | reverse track by $index" ng-class="{'new-buckit-glow': $index===0 && shouldGlow}">
+                              	<td class="event">
+																	<b>{{event.name}}</b><br>
+<!--																	{{event.code}}<br>-->
+																	{{event.time | date: 'medium' }}
+																</td>
+															
+																<td class="balance center">{{event.balance | currency}} <br>
+																	({{event.bucks | currency}})<!--<br> {{event.id}} {{$index}}--> </td>
+<!--                              <td class="code center">{{event.code}}</td><td class="time center">{{event.time | date: 'medium' }}</td><td class="bucks center">{{event.bucks | currency}}</td>-->
+												
+															</tr>           
+                          
+                      </table>
+                  </div>    
+                      </td>    
+                  </tr>
+              </tbody>
+          </table> 				
+				</div> <!----------------------------------------- END MOBILE history-table-container -->				
             
       </div> <!-- end table-both-container -->
       <div class="nofloat">
